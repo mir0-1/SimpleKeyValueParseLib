@@ -1,6 +1,6 @@
 #pragma once
-#include "CommonMutableMap.h"
-#include "../SimpleTestingLibrary/assert.h"
+#include "../src/CommonMutableMap.h"
+#include "../../SimpleTestingLibrary/assert.h"
 #include "test-configuration.h"
 
 void printParseInput(char* parseInput)
