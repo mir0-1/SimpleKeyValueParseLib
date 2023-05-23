@@ -20,6 +20,16 @@ bool ValueWrapper::isNull() const
 	return nullReference;
 }
 
+bool ValueWrapper::isInt() const
+{
+	if (value.empty())
+		return false;
+
+    std::string::const_iterator it = value.begin();
+    while (it != value.end() && std::isdigit(*it)) ++it;
+    return !value.empty() && it == value.end();
+}
+
 ValueWrapper::ValueWrapper(const std::string& value)
 {
 	this->value = value;

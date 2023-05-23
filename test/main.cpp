@@ -1,5 +1,6 @@
 #include "test-CommonParsableMap.h"
 #include "test-CommonMutableMap.h"
+#include "test-ValueWrapper.h"
 #include "../src/template/CommonImmutableMap.h"
 
 int main()
@@ -7,6 +8,12 @@ int main()
 	CommonParsableMap dummy0;
 	CommonMutableMap<int, int> dummy1;
 	CommonImmutableMap<int, int> dummy2(dummy1);
+
+	std::cout << "[--------------------TESTING ValueWrapper now------------------------]" << std::endl;
+	test_ValueWrapper_validInt();
+	test_ValueWrapper_invalidInt();
+	test_ValueWrapper_validBool();
+	test_ValueWrapper_invalidBool();
 
 	std::cout << "[--------------------TESTING CommonMutableMap now--------------------]" << std::endl;
 	test_CommonMutableMap_checkPresence();
