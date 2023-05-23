@@ -1,5 +1,5 @@
 template <class K, class V>
-bool CommonImmutableMap::hasKey(const K& key) const
+bool CommonImmutableMap<K, V>::hasKey(const K& key) const
 {
 	return map.hasKey(key);
 }
@@ -35,7 +35,7 @@ bool CommonImmutableMap<K, V>::isIteratorReset() const
 }
 
 template <class K, class V>
-CommonImmutableMap<K, V>::CommonImmutableMap(CommonMutableMap& map)
+CommonImmutableMap<K, V>::CommonImmutableMap(CommonMutableMap<K, V>& map)
 	:	map(map)
 {
 }

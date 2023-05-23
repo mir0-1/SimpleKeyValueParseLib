@@ -1,8 +1,13 @@
 #include "test-CommonParsableMap.h"
 #include "test-CommonMutableMap.h"
+#include "../src/template/CommonImmutableMap.h"
 
 int main()
 {
+	CommonParsableMap dummy0;
+	CommonMutableMap<int, int> dummy1;
+	CommonImmutableMap<int, int> dummy2(dummy1);
+
 	std::cout << "[--------------------TESTING CommonMutableMap now--------------------]" << std::endl;
 	test_CommonMutableMap_checkPresence();
 	test_CommonMutableMap_checkOverride_sameStruct();

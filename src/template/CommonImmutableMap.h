@@ -5,7 +5,7 @@ template <class K, class V>
 class CommonImmutableMap : public CommonIterableMap<K, V>
 {
 	private:
-		CommonMutableMap& map;
+		CommonMutableMap<K, V>& map;
 
 	public:
 		const ValueWrapper& getValue(const K& key) const;
@@ -16,7 +16,7 @@ class CommonImmutableMap : public CommonIterableMap<K, V>
 		virtual bool isIteratorReset() const override;
 		virtual bool isIteratorAtEnd() const override;
 
-		CommonImmutableMap<K, V>(CommonMutableMap& map);
+		CommonImmutableMap(CommonMutableMap<K, V>& map);
 };
 
 #include "CommonImmutableMap.cpp"
