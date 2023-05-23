@@ -16,6 +16,12 @@ void CommonMutableMap<K, V>::setValue(const K& key, const V& value)
 }
 
 template <class K, class V>
+void CommonMutableMap<K, V>::removeKey(const K& key)
+{
+	map.erase(key);
+}
+
+template <class K, class V>
 bool CommonMutableMap<K, V>::hasKey(const K& key) const
 {
 	return map.find(key) != map.end();
