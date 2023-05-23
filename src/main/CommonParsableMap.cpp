@@ -1,21 +1,6 @@
-#include "CommonMutableMap.h"
+#include "CommonParsableMap.h"
 
-const ValueWrapper& CommonMutableMap::getValue(const std::string& key) const
-{
-	static ValueWrapper nullKey;
-
-	auto iter = map.find(key);
-	if (iter != map.end())
-		return iter->second;
-	return nullKey;
-}
-
-void CommonMutableMap::setValue(const std::string& key, const ValueWrapper& value)
-{
-	map[key] = value;
-}
-
-char* CommonMutableMap::parseKeyValuePairs(char* src, char separator, char terminator)
+char* CommonParsableMap::parseKeyValuePairs(char* src, char separator, char terminator)
 {
 	int keyStartIndex = -1;
 	int valueStartIndex = -1;
@@ -82,39 +67,4 @@ char* CommonMutableMap::parseKeyValuePairs(char* src, char separator, char termi
 	}
 
 	return src + i + 1;
-}
-
-bool CommonMutableMap::hasKey(const std::string& key) const
-{
-	return map.find(key) != map.end();
-}
-
-std::pair<std::string, ValueWrapper> CommonMutableMap::getNextPairFromIterator()
-{
-	it++;
-
-	if (isIteratorAtEnd())
-		resetIterator();
-
-	return std::make_pair(it->first, it->second);
-}
-
-bool CommonMutableMap::isIteratorAtEnd() const
-{
-	return it == map.cend();
-}
-
-void CommonMutableMap::resetIterator()
-{
-	it = map.cbegin();
-}
-
-bool CommonMutableMap::isIteratorReset() const
-{
-	return it == map.cbegin();
-}
-
-CommonMutableMap::CommonMutableMap()
-{
-	resetIterator();
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "../src/CommonMutableMap.h"
+#include "../src/main/CommonParsableMap.h"
 #include "../../SimpleTestingLibrary/assert.h"
 #include "test-configuration.h"
 
@@ -12,9 +12,9 @@ void printParseInput(char* parseInput)
 	}
 }
 
-void test_CommonMutableMap_insertKeyValuePairs()
+void test_CommonParsableMap_insertKeyValuePairs()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 
 	map.setValue("test", ValueWrapper("1234"));
 	map.setValue("alpha", ValueWrapper("more"));
@@ -29,9 +29,9 @@ void test_CommonMutableMap_insertKeyValuePairs()
 	assertTrue(map.getValue("rabbit").getAsBool() == true, exitOnFail, "Testing rabbit value correctness", testLogger);
 }
 
-void test_CommonMutableMap_iterateKeyValuePairs()
+void test_CommonParsableMap_iterateKeyValuePairs()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 
 	const char* expectedKeysForIteration[] = {"test", "alpha", "rabbit"};
 	const char* expectedValuesForIteration[] = {"1234", "more", "1"};
@@ -64,9 +64,9 @@ void test_CommonMutableMap_iterateKeyValuePairs()
 	assertTrue(actualIterationCount == expectedIterationCount, exitOnFail, "Testing overall iteration count", testLogger);
 }
 
-void test_CommonMutableMap_iterateEmpty()
+void test_CommonParsableMap_iterateEmpty()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 
 	const int expectedIterationCount = 0;
 	int actualIterationCount = 0;
@@ -84,9 +84,9 @@ void test_CommonMutableMap_iterateEmpty()
 	assertTrue(expectedIterationCount == actualIterationCount, exitOnFail, "Testing overall iteration count (should not iterate)", testLogger);
 }
 
-void test_CommonMutableMap_parse_simpleQueryLikeParams()
+void test_CommonParsableMap_parse_simpleQueryLikeParams()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "myvalue=1&anotherV=test";
 
 	printParseInput(src);
@@ -99,9 +99,9 @@ void test_CommonMutableMap_parse_simpleQueryLikeParams()
 	assertTrue(map.getValue("anotherV").getAsString() == "test", exitOnFail, "Testing value of key called anotherV", testLogger);
 }
 
-void test_CommonMutableMap_parse_simpleQueryMidTerminated()
+void test_CommonParsableMap_parse_simpleQueryMidTerminated()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "myvalue=1&+anotherV=test";
 
 	printParseInput(src);
@@ -113,9 +113,9 @@ void test_CommonMutableMap_parse_simpleQueryMidTerminated()
 	assertTrue(map.getValue("myvalue").getAsInt() == 1, exitOnFail, "Testing value of key called anotherV (mid terminator \'+\')", testLogger);
 }
 
-void test_CommonMutableMap_parse_queryMidTerminated_multipleSeparators()
+void test_CommonParsableMap_parse_queryMidTerminated_multipleSeparators()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "&&myvalue=1&&somethingElse=yes&&&&&+anotherV=test&&&";
 
 	printParseInput(src);
@@ -129,9 +129,9 @@ void test_CommonMutableMap_parse_queryMidTerminated_multipleSeparators()
 	assertTrue(map.getValue("somethingElse").getAsString() == "yes", exitOnFail, "Testing value of key called somethingElse (mid terminator \'+\', multiple &)'", testLogger);
 }
 
-void test_CommonMutableMap_parse_configFile_multipleSeparators()
+void test_CommonParsableMap_parse_configFile_multipleSeparators()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "\n\nmyvalue=1\n\nsomethingElse=yes\n\n\nanotherV=test\n\n\n";
 
 	printParseInput(src);
@@ -146,9 +146,9 @@ void test_CommonMutableMap_parse_configFile_multipleSeparators()
 	assertTrue(map.getValue("somethingElse").getAsString() == "yes", exitOnFail, "Testing value of key called somethingElse (config-like, \\n multiple separator)", testLogger);
 }
 
-void test_CommonMutableMap_parse_configFile_multipleSeparatorsCRLF()
+void test_CommonParsableMap_parse_configFile_multipleSeparatorsCRLF()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "\r\n\r\nmyvalue=1\r\n\r\nsomethingElse=yes\r\n\r\nanotherV=test\r\n";
 
 	printParseInput(src);
@@ -163,9 +163,9 @@ void test_CommonMutableMap_parse_configFile_multipleSeparatorsCRLF()
 	assertTrue(map.getValue("somethingElse").getAsString() == "yes", exitOnFail, "Testing value of key called somethingElse (config-like, \\r\\n multiple separator)", testLogger);
 }
 
-void test_CommonMutableMap_parse_configFile_multipleSeparatorsCRLF_extraCR()
+void test_CommonParsableMap_parse_configFile_multipleSeparatorsCRLF_extraCR()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "\r\n\r\nmyvalue=1\r\n\r\nsomethingElse=yes\r\r\n\r\nanotherV=test\r\n";
 
 	printParseInput(src);
@@ -180,9 +180,9 @@ void test_CommonMutableMap_parse_configFile_multipleSeparatorsCRLF_extraCR()
 	assertTrue(map.getValue("somethingElse").getAsString() == "yes\r", exitOnFail, "Testing value of key called somethingElse (config-like, \\r\\n multiple separator, extra \\r)", testLogger);
 }
 
-void test_CommonMutableMap_parse_configFile_multipleSeparatorsCRLF_multipleEquals()
+void test_CommonParsableMap_parse_configFile_multipleSeparatorsCRLF_multipleEquals()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "\r\n\r\nmyvalue==p==1\r\n\r\nsomethingElse===yes\r\n\r\nanotherV===test\r\n";
 
 	printParseInput(src);
@@ -197,9 +197,9 @@ void test_CommonMutableMap_parse_configFile_multipleSeparatorsCRLF_multipleEqual
 	assertTrue(map.getValue("somethingElse==").getAsString() == "yes", exitOnFail, "Testing value of key called somethingElse== (config-like, \\r\\n multiple separator, multiple =)", testLogger);
 }
 
-void test_CommonMutableMap_parse_simpleQuery_spaceChaos()
+void test_CommonParsableMap_parse_simpleQuery_spaceChaos()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "myv  alu  e=1  &ano  ther V=te st  ";
  
 	printParseInput(src);
@@ -212,9 +212,9 @@ void test_CommonMutableMap_parse_simpleQuery_spaceChaos()
 	assertTrue(map.getValue("ano  ther V").getAsString() == "te st  ", exitOnFail, "Testing value of key called \'ano  ther V\' (space chaos)", testLogger);
 }
 
-void test_CommonMutableMap_parse_simpleQuery_emptyValue()
+void test_CommonParsableMap_parse_simpleQuery_emptyValue()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "myvalue=&anotherV=test";
  
 	printParseInput(src);
@@ -227,9 +227,9 @@ void test_CommonMutableMap_parse_simpleQuery_emptyValue()
 	assertTrue(map.getValue("anotherV").getAsString() == "test", exitOnFail, "Testing value of key called anotherV (empty value)", testLogger);
 }
 
-void test_CommonMutableMap_parse_simpleQuery_noValue()
+void test_CommonParsableMap_parse_simpleQuery_noValue()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "myvalue&anotherV=test";
  
 	printParseInput(src);
@@ -241,9 +241,9 @@ void test_CommonMutableMap_parse_simpleQuery_noValue()
 	assertTrue(map.getValue("anotherV").getAsString() == "test", exitOnFail, "Testing value of key called anotherV (no value)", testLogger);
 }
 
-void test_CommonMutableMap_parse_simpleQuery_noValue_multipleKeyValueSeparators()
+void test_CommonParsableMap_parse_simpleQuery_noValue_multipleKeyValueSeparators()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "myvalue&&&anotherV=test&&";
  
 	printParseInput(src);
@@ -255,9 +255,9 @@ void test_CommonMutableMap_parse_simpleQuery_noValue_multipleKeyValueSeparators(
 	assertTrue(map.getValue("anotherV").getAsString() == "test", exitOnFail, "Testing value of key called anotherV (no value, multiple &)", testLogger);
 }
 
-void test_CommonMutableMap_parse_simpleQuery_noKey()
+void test_CommonParsableMap_parse_simpleQuery_noKey()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "=myvalue&anotherV=test";
  
 	printParseInput(src);
@@ -271,9 +271,9 @@ void test_CommonMutableMap_parse_simpleQuery_noKey()
 	assertTrue(map.getValue("anotherV").getAsString() == "test", exitOnFail, "Testing value of key called anotherV (no key)", testLogger);
 }
 
-void test_CommonMutableMap_parse_justEquals()
+void test_CommonParsableMap_parse_justEquals()
 {
-	CommonMutableMap map;
+	CommonParsableMap map;
 	char src[] = "=";
  
 	printParseInput(src);
