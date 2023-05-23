@@ -13,7 +13,7 @@ class CommonMutableMap : public CommonIterableMap<K, V>
 		virtual void setValue(const K& key, const V& value);
 
 		virtual bool hasKey(const K& key) const override;
-		std::pair<K, V> getNextPairFromIterator() override;
+		virtual std::pair<K, V> getNextPairFromIterator() override;
 		virtual void resetIterator() override;
 		virtual bool isIteratorReset() const override;
 		virtual bool isIteratorAtEnd() const override;
