@@ -283,3 +283,18 @@ void test_CommonParsableMap_parse_justEquals()
 	assertTrue(map.hasKey(""), exitOnFail, "Testing presence of key \"\" (intentional empty string) (just equals sign)", testLogger);
 	assertTrue(map.getValue("").getAsString() == "", exitOnFail, "Testing value of key \"\" (intentional empty string) (just equals sign)", testLogger);
 }
+
+void test_CommonParsableMap_toString()
+{
+	CommonParsableMap map;
+	char src[] = "&key1=test2&&&somethingElse=tttttt&&&proba23=45&";
+ 
+	printParseInput(src);
+
+	map.parseKeyValuePairs(src, '&', '\0');
+	std::string result = map.toString();
+
+	(*testLogger) << result << std::endl;
+
+	assertTrue(result == "proba23=45\r\nkey1=test2\r\nsomethingElse=tttttt\r\n", exitOnFail, "Testing toString of map", testLogger);
+}

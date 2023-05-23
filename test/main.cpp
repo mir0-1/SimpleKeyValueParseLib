@@ -31,4 +31,5 @@ int main()
 	test_CommonParsableMap_parse_simpleQuery_noValue_multipleKeyValueSeparators();
 	test_CommonParsableMap_parse_simpleQuery_noKey();
 	test_CommonParsableMap_parse_justEquals();
+	test_CommonParsableMap_toString();
 }

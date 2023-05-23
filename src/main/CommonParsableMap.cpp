@@ -68,3 +68,25 @@ char* CommonParsableMap::parseKeyValuePairs(char* src, char separator, char term
 
 	return src + i + 1;
 }
+
+std::string CommonParsableMap::toString()
+{
+	std::string result;
+
+	resetIterator();
+
+	while (!isIteratorAtEnd())
+	{
+		std::pair<std::string, ValueWrapper> pair = getNextPairFromIterator();
+
+		result.append(pair.first);
+		result.append("=");
+		result.append(pair.second.getAsString());
+		result.append("\r\n");
+
+		if (isIteratorReset())
+			break;
+	}
+
+	return result;
+}
