@@ -8,7 +8,7 @@ class ValueWrapper
 		std::string value;
 
 	public:
-		std::string getAsString() const;
+		const std::string& getAsString() const;
 		int getAsInt() const;
 		bool getAsBool() const;
 		bool isNull() const;

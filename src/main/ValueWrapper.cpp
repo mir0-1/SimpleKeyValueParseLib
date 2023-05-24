@@ -1,6 +1,6 @@
 #include "ValueWrapper.h"
 
-std::string ValueWrapper::getAsString() const
+const std::string& ValueWrapper::getAsString() const
 {
 	return value;
 }
